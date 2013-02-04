@@ -38,10 +38,14 @@ public class LoadLibraryUtil {
      * Variable that holds the key for Windows 32-bit
      */
     private static final String WINDOWS_32 = "win32";
-    private static final String WINDOWS_64 = "win64";
     /**
      * Variable that holds the key for Windows 64-bit
      */
+    private static final String WINDOWS_64 = "win64";
+    /**
+     * Variable that holds the key for linux 32 bit
+     */
+    private static final String LINUX_32 = "lin32";
     /**
      * Path to libs directory and part of the dynamic library's file name
      */
@@ -129,7 +133,7 @@ public class LoadLibraryUtil {
     public void initializeLibs() {
         libs.put(LoadLibraryUtil.WINDOWS_32, "6a5011ac99a28aed8c158ace03f03cd5");
         libs.put(LoadLibraryUtil.WINDOWS_64, "070068e7e381371f11fdda507fd22cc0");
-
+        libs.put(LoadLibraryUtil.LINUX_32, "ebd3278552d297825e1d35fbaf067f5a");
     }
 
     /**
@@ -144,6 +148,8 @@ public class LoadLibraryUtil {
             return LoadLibraryUtil.WINDOWS_32;
         } else if (osname.toLowerCase().contains("windows") && arch.toLowerCase().contains("amd64")) {
             return LoadLibraryUtil.WINDOWS_64;
+        } else if (osname.toLowerCase().contains("linux") && arch.toLowerCase().contains("i386")) {
+            return LoadLibraryUtil.LINUX_32;
         } else {
             return osname + ":" + arch;
         }
@@ -161,6 +167,10 @@ public class LoadLibraryUtil {
             handleResponse(response, systemType);
         } else if (systemType.equals(LoadLibraryUtil.WINDOWS_64)) {
             response = sendMessageYesNoCancel("<html>The detected system is Windows 64-bit.  Press \"Yes\" to automatically load the required library.<br>" +
+                    "If the information displayed is incorrect, press \"No\" to load your own library file.  Press \"Cancel\" to exit. </html>", "System");
+            handleResponse(response, systemType);
+        } else if (systemType.equals(LoadLibraryUtil.LINUX_32)) {
+            response = sendMessageYesNoCancel("<html>The detected system is Linux 32-bit.  Press \"Yes\" to automatically load the required library.<br>" +
                     "If the information displayed is incorrect, press \"No\" to load your own library file.  Press \"Cancel\" to exit. </html>", "System");
             handleResponse(response, systemType);
         } else {
@@ -183,7 +193,8 @@ public class LoadLibraryUtil {
      */
     public void handleResponse(int response, String systemType) {
         if (response == 0) {
-            loadAndVerifyLibrary(systemType);
+            boolean linux = systemType.equals(LoadLibraryUtil.LINUX_32);
+            loadAndVerifyLibrary(systemType, linux);
         } else if (response == 1) {
             loadCustomLibraryFile();
         } else if (response == 2 || response == -1) {
@@ -196,12 +207,20 @@ public class LoadLibraryUtil {
      *
      * @param systemType Recognized system type
      */
-    public void loadAndVerifyLibrary(String systemType) {
-        InputStream inputStream = this.getClass().getResourceAsStream(LoadLibraryUtil.LIBRARY + systemType + ".dll");
+    public void loadAndVerifyLibrary(String systemType, boolean linux) {
+        String suffix;
+        if (linux) {
+            suffix = ".so";
+        } else {
+            suffix = ".dll";
+        }
+
+
+        InputStream inputStream = this.getClass().getResourceAsStream(LoadLibraryUtil.LIBRARY + systemType + suffix);
         int response;
 
         if (inputStream == null) {
-            response = sendMessageYesNo("<html>Failed to load library MySQLHashDecrypter" + systemType + ".dll<br>" +
+            response = sendMessageYesNo("<html>Failed to load library MySQLHashDecrypter" + systemType + suffix + "<br>" +
                     "Press \"Yes\" to load your own library.  Press \"No\" to exit.</html>", "Load Error", true);
             if (response == 0) {
                 loadCustomLibraryFile();
@@ -212,7 +231,7 @@ public class LoadLibraryUtil {
             String md5 = getMD5OfStream(inputStream);
             if (libs.get(systemType).equals(md5)) {
                 loadVerifiedLibrary(systemType);
-                sendMessage("Library MySQLHashDecrypter" + systemType + ".dll has been loaded and verified successfully.", "Load Complete", false);
+                sendMessage("Library MySQLHashDecrypter" + systemType + suffix + " has been loaded and verified successfully.", "Load Complete", false);
             } else {
                 response = sendMessageYesNo("<html>Failed to verify integrity of library MySQLHashDecrypter" + systemType + ".dll<br>" +
                         "Press \"Yes\" to load your own library.  Press \"No\" to exit.</html>", "Load Error", true);
@@ -232,13 +251,20 @@ public class LoadLibraryUtil {
      */
     public void loadVerifiedLibrary(String systemType) {
         try {
+            String suffix;
+            if (systemType.equals(LoadLibraryUtil.LINUX_32)) {
+                suffix = ".so";
+            } else {
+                suffix = ".dll";
+            }
+
             String tmpdir = System.getProperty("java.io.tmpdir");
-            File tmpFile = new File(tmpdir + "MySQLHashDecrypter" + systemType + ".dll");
+            File tmpFile = new File(tmpdir + "/MySQLHashDecrypter" + systemType + suffix);
 
             tmpFile.delete();
 
             tmpFile.deleteOnExit();
-            InputStream inputStream = this.getClass().getResourceAsStream(LoadLibraryUtil.LIBRARY + systemType + ".dll");
+            InputStream inputStream = this.getClass().getResourceAsStream(LoadLibraryUtil.LIBRARY + systemType + suffix);
             FileOutputStream fileOutputStream = new FileOutputStream(tmpFile);
             int read;
 
