@@ -1,0 +1,31 @@
+﻿Build started 8/15/2011 10:52:57 PM.
+     1>Project "C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\MySQLHashDecrypter\MySQLHashDecrypter.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "x64\Release\MySQLHashDecrypter.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "x64\Release\MySQLHashDecrypter.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D MYSQLHASHDECRYPTER_EXPORTS /D _WINDLL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"x64\Release\MySQLHashDecrypter.pch" /Fo"x64\Release\\" /Fd"x64\Release\vcWindows7.1SDK.pdb" /Gd /TP /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D MYSQLHASHDECRYPTER_EXPORTS /D _WINDLL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"x64\Release\MySQLHashDecrypter.pch" /Fo"x64\Release\\" /Fd"x64\Release\vcWindows7.1SDK.pdb" /Gd /TP /errorReport:prompt HashUtil.cpp
+         HashUtil.cpp
+     1>HashUtil.cpp(121): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(325) : see declaration of 'sscanf'
+     1>HashUtil.cpp(145): warning C4800: 'jboolean' : forcing value to bool 'true' or 'false' (performance warning)
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.dll" /INCREMENTAL:NO /NOLOGO user32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\MySQLHashDecrypter.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.lib" /MACHINE:X64 /DLL x64\Release\HashUtil.obj
+         x64\Release\stdafx.obj
+            Creating library C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.lib and object C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.exp
+         Generating code
+         Finished generating code
+         MySQLHashDecrypter.vcxproj -> C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.dll
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.1\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\x64\Release\MySQLHashDecrypter.dll;#2" /manifest x64\Release\MySQLHashDecrypter.dll.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "x64\Release\MySQLHashDecrypter.unsuccessfulbuild".
+         Touching "x64\Release\MySQLHashDecrypter.lastbuildstate".
+     1>Done Building Project "C:\Users\User\documents\visual studio 2010\Projects\MysqlHashDecrypter\MySQLHashDecrypter\MySQLHashDecrypter.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.88
